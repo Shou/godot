@@ -215,6 +215,7 @@ void NavigationAgent2D::set_target_location(Vector2 p_location) {
 	target_reached = false;
 	navigation_finished = false;
 	update_frame_id = 0;
+	update_navigation();
 }
 
 Vector2 NavigationAgent2D::get_target_location() const {
@@ -222,7 +223,6 @@ Vector2 NavigationAgent2D::get_target_location() const {
 }
 
 Vector2 NavigationAgent2D::get_next_location() {
-	update_navigation();
 	if (navigation_path.size() == 0) {
 		ERR_FAIL_COND_V(agent_parent == nullptr, Vector2());
 		return agent_parent->get_global_transform().get_origin();
@@ -245,12 +245,10 @@ bool NavigationAgent2D::is_target_reachable() {
 }
 
 bool NavigationAgent2D::is_navigation_finished() {
-	update_navigation();
 	return navigation_finished;
 }
 
 Vector2 NavigationAgent2D::get_final_location() {
-	update_navigation();
 	if (navigation_path.size() == 0) {
 		return Vector2();
 	}

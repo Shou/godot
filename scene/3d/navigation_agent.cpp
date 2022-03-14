@@ -234,6 +234,7 @@ void NavigationAgent::set_target_location(Vector3 p_location) {
 	target_reached = false;
 	navigation_finished = false;
 	update_frame_id = 0;
+	update_navigation();
 }
 
 Vector3 NavigationAgent::get_target_location() const {
@@ -241,7 +242,6 @@ Vector3 NavigationAgent::get_target_location() const {
 }
 
 Vector3 NavigationAgent::get_next_location() {
-	update_navigation();
 	if (navigation_path.size() == 0) {
 		ERR_FAIL_COND_V(agent_parent == nullptr, Vector3());
 		return agent_parent->get_global_transform().origin;
@@ -264,12 +264,10 @@ bool NavigationAgent::is_target_reachable() {
 }
 
 bool NavigationAgent::is_navigation_finished() {
-	update_navigation();
 	return navigation_finished;
 }
 
 Vector3 NavigationAgent::get_final_location() {
-	update_navigation();
 	if (navigation_path.size() == 0) {
 		return Vector3();
 	}
